@@ -1,0 +1,66 @@
+---
+import Base from '../layouts/Base.astro';
+import Journey from '../components/story/Journey.astro';
+import HomesMoment from '../components/HomesMoment.astro';
+import FireDemo from '../components/FireDemo.astro';
+import JobRows from '../components/JobRows.astro';
+import OpenStatus from '../components/OpenStatus.astro';
+import Icon from '../components/Icon.astro';
+import { dropoff, org } from '../data/site';
+---
+<Base title="Home" description="Shasta SRM turns forest thinnings and wood waste into renewable electricity for about 62,600 Northern California homes, from our plant in Anderson, CA.">
+  <Journey />
+
+  <HomesMoment />
+
+  <section class="section wildfire" aria-labelledby="wf-title">
+    <div class="wrap split">
+      <div class="stack">
+        <h2 id="wf-title">Thin the forest, starve the fire.</h2>
+        <p class="lede">Crowded forests let flames jump from tree to tree. Thinning opens gaps the fire can’t cross, and gives the wood somewhere useful to go. Try it on two stands of the same forest.</p>
+        <a class="link-arrow" href="/forests-and-wildfire/">Why thinning matters <Icon name="arrow-right" /></a>
+      </div>
+      <FireDemo compact />
+    </div>
+  </section>
+
+  <section class="section crew" aria-labelledby="crew-title">
+    <div class="wrap stack" style="--gap: 36px">
+      <div class="crew-head">
+        <h2 id="crew-title">Good jobs, right here in Anderson.</h2>
+        <p class="lede">It takes a skilled local crew to keep a 55-megawatt plant running: operators, mechanics, and the people who keep fuel moving through the yard. Pay is posted on every role.</p>
+      </div>
+      <JobRows />
+      <div class="cluster">
+        <a class="btn btn-primary" href={org.applyUrl} target="_blank" rel="noopener">Apply online <Icon name="arrow-up-right" /></a>
+        <a class="btn" href="/careers/">How hiring works</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="dropoff" aria-labelledby="do-title">
+    <div class="wrap band">
+      <div class="stack">
+        <h2 id="do-title">Got clean wood? Drop it off free.</h2>
+        <OpenStatus schedule="dropoff" />
+      </div>
+      <p class="accepts">We take {dropoff.accepted.slice(0, 4).map((a) => a.toLowerCase()).join(', ')}, and clean lumber. No yard waste, stumps, or painted wood.</p>
+      <a class="btn" href="/drop-off/">What we accept <Icon name="arrow-right" /></a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .split { display: grid; grid-template-columns: minmax(280px, 5fr) 7fr; gap: clamp(32px, 6vw, 88px); align-items: center; }
+  .wildfire { border-top: 1px solid var(--line); }
+  .crew { background: var(--surface); border-block: 1px solid var(--line); }
+  .crew-head { display: grid; grid-template-columns: 1fr 1fr; gap: 24px 64px; align-items: end; }
+  .dropoff { padding-block: clamp(48px, 7vw, 88px); }
+  .band { display: grid; grid-template-columns: auto 1fr auto; gap: 20px 48px; align-items: center; }
+  .band h2 { font-size: clamp(1.7rem, 2.8vw, 2.4rem); }
+  .accepts { color: var(--muted); max-width: 52ch; }
+  @media (max-width: 900px) {
+    .split, .crew-head, .band { grid-template-columns: 1fr; }
+    .band .btn { justify-self: start; }
+  }
+</style>

@@ -1,0 +1,24 @@
+---
+// Live open/closed line for a posted schedule, computed in Anderson time on the visitor's device.
+interface Props { schedule: 'dropoff' | 'delivery'; prefix?: string }
+const { schedule, prefix = '' } = Astro.props;
+---
+<span class="status" data-status={schedule} data-prefix={prefix} data-open="">
+  <span class="dot" aria-hidden="true"></span>
+  <span data-text>{prefix}Checking today’s hours…</span>
+</span>
+
+<script>
+  import { schedules } from '../data/site';
+  import { status } from '../lib/hours';
+  function paint() {
+    document.querySelectorAll<HTMLElement>('[data-status]').forEach((el) => {
+      const key = el.dataset.status as keyof typeof schedules;
+      const s = status(schedules[key]);
+      el.dataset.open = String(s.open);
+      const t = el.querySelector('[data-text]')!;
+      t.innerHTML = `${el.dataset.prefix ?? ''}<b>${s.text}</b>${s.detail ? ` · ${s.detail}` : ''}`;
+    });
+  }
+  paint(); setInterval(paint, 60000);
+</script>

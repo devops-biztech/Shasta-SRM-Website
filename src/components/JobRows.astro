@@ -1,0 +1,35 @@
+---
+import Icon from './Icon.astro';
+import { openJobs, payRange } from '../lib/jobs';
+const jobs = await openJobs();
+---
+<ul class="rows">
+  {jobs.map((j) => (
+    <li>
+      <a href={`/careers/#${j.id}`}>
+        <span class="title">{j.data.title}</span>
+        <span class="sum">{j.data.summary}</span>
+        <span class="pay">{payRange(j)}</span>
+        <Icon name="arrow-right" class="go" />
+      </a>
+    </li>
+  ))}
+</ul>
+
+<style>
+  .rows { list-style: none; padding: 0; margin: 0; border-top: 1px solid var(--line); }
+  a { display: grid; grid-template-columns: minmax(180px, 1.1fr) 2fr 10.5rem 24px; gap: 8px 28px; align-items: center; padding: 22px 12px; margin-inline: -12px; border-radius: 12px; border-bottom: 1px solid var(--line); text-decoration: none; transition: background-color .2s; }
+  .pay { text-align: right; }
+  @media (hover: hover) { a:hover { background: var(--bg); } }
+  .title { font: 800 1.3rem/1.15 var(--display); letter-spacing: -.02em; }
+  .sum { color: var(--muted); }
+  .pay { font-weight: 700; color: var(--gold); white-space: nowrap; }
+  a :global(.go) { transition: transform .3s var(--ease-out); }
+  @media (hover: hover) { a:hover :global(.go) { transform: translateX(4px); } }
+  @media (max-width: 760px) {
+    a { grid-template-columns: 1fr auto; }
+    .pay { text-align: left; }
+    .sum { grid-column: 1 / -1; grid-row: 2; }
+    a :global(.go) { display: none; }
+  }
+</style>

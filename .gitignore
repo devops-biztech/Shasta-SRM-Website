@@ -1,0 +1,10 @@
+node_modules/
+dist/
+.astro/
+.env
+.env.*
+.DS_Store
+scripts/terrain/.venv/
+scripts/terrain/tiles/
+scripts/terrain/*.npy
+.impeccable/config.local.json

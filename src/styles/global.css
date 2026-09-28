@@ -1,0 +1,134 @@
+/* Shasta SRM — one world, two lights. Day tokens are the base; html.night swaps them.
+   The light follows the real sun over Anderson (see Base.astro). */
+
+:root {
+  --bg: #eef1ec;
+  --surface: #f8faf8;
+  --surface-2: #e4eae5;
+  --ink: #13241c;
+  --muted: #4a5b53;
+  --line: #d3ddd8;
+  --line-strong: #b7c5be;
+  --fuel: #2f7a45;
+  --steam: #4f84b5;
+  --boil: #c95f2a;
+  --gold: #9a6a06;          /* gold as text / linework on light */
+  --gold-glow: #f0b93f;     /* amber: reserved for primary actions */
+  --on-gold: #1b1a10;
+  --danger: #a3372b;
+  --sky-top: #8fbbe0;
+  --sky-bot: #e9f1f3;
+
+  --display: "Bricolage Grotesque Variable", "Segoe UI", system-ui, sans-serif;
+  --body: "Schibsted Grotesk Variable", "Segoe UI", system-ui, sans-serif;
+
+  --gutter: clamp(16px, 4vw, 48px);
+  --max: 1240px;
+  --radius: 18px;
+  --ease-out: cubic-bezier(.16, 1, .3, 1);
+
+  --shadow-1: 0 1px 2px rgba(19, 36, 28, .06), 0 8px 24px -12px rgba(19, 36, 28, .18);
+  --shadow-2: 0 2px 4px rgba(19, 36, 28, .06), 0 22px 48px -20px rgba(19, 36, 28, .28);
+
+  color-scheme: light;
+}
+
+html.night {
+  --bg: #0a1422;
+  --surface: #101e32;
+  --surface-2: #16263d;
+  --ink: #eaf1f7;
+  --muted: #a3b3c5;
+  --line: #22344f;
+  --line-strong: #33496b;
+  --fuel: #7fd192;
+  --steam: #9cc4ea;
+  --boil: #f08a55;
+  --gold: #ffc94d;
+  --danger: #ff8d7d;
+  --sky-top: #0b1630;
+  --sky-bot: #22335a;
+  --shadow-1: 0 1px 2px rgba(0, 0, 0, .3), 0 8px 24px -12px rgba(0, 0, 0, .6);
+  --shadow-2: 0 2px 4px rgba(0, 0, 0, .3), 0 22px 48px -20px rgba(0, 0, 0, .7);
+  color-scheme: dark;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: 88px; }
+html, body { background: var(--bg); }
+body {
+  margin: 0;
+  color: var(--ink);
+  font: 400 1.0625rem/1.6 var(--body);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  transition: background-color .8s var(--ease-out), color .8s var(--ease-out);
+  caret-color: var(--fuel);
+  accent-color: var(--fuel);
+}
+img, svg, canvas { display: block; max-width: 100%; }
+img { height: auto; }
+
+/* Browser surfaces carry the design too */
+::selection { background: var(--gold-glow); color: var(--on-gold); }
+html { scrollbar-color: var(--line-strong) var(--bg); }
+:focus-visible { outline: 3px solid var(--gold-glow); outline-offset: 3px; border-radius: 4px; }
+a { color: inherit; text-decoration-thickness: 1.5px; text-underline-offset: .22em; text-decoration-color: color-mix(in srgb, currentColor 45%, transparent); transition: text-decoration-color .2s; }
+a:hover { text-decoration-color: currentColor; }
+
+h1, h2, h3, h4 { font-family: var(--display); line-height: 1.02; letter-spacing: -.03em; margin: 0; text-wrap: balance; font-weight: 800; }
+h1 { font-size: clamp(2.6rem, 6vw, 5.6rem); letter-spacing: -.04em; line-height: .96; }
+h2 { font-size: clamp(2rem, 3.8vw, 3.3rem); }
+h3 { font-size: clamp(1.3rem, 1.8vw, 1.6rem); letter-spacing: -.02em; line-height: 1.15; }
+p { margin: 0; text-wrap: pretty; }
+.lede { font-size: clamp(1.1rem, 1.5vw, 1.3rem); color: var(--muted); max-width: 58ch; line-height: 1.55; }
+.muted { color: var(--muted); }
+.prose { max-width: 68ch; display: grid; gap: 1.1em; }
+.prose p { line-height: 1.7; }
+.prose h2 { margin-top: .8em; }
+.prose h3 { margin-top: .6em; }
+
+.wrap { width: min(100%, var(--max)); margin-inline: auto; padding-inline: var(--gutter); }
+.section { padding-block: clamp(72px, 10vw, 140px); }
+.section-tight { padding-block: clamp(48px, 7vw, 96px); }
+.stack { display: grid; gap: var(--gap, 20px); align-content: start; }
+.cluster { display: flex; flex-wrap: wrap; gap: var(--gap, 12px); align-items: center; }
+
+/* Buttons: amber is reserved for the one primary action in a view */
+.btn {
+  --b-bg: transparent; --b-fg: var(--ink); --b-bd: color-mix(in srgb, var(--ink) 55%, transparent);
+  display: inline-flex; align-items: center; gap: 10px; min-height: 48px;
+  font: 700 1rem/1 var(--body); padding: 14px 22px; border-radius: 999px;
+  text-decoration: none; background: var(--b-bg); color: var(--b-fg); border: 1.5px solid var(--b-bd);
+  cursor: pointer; transition: transform .25s var(--ease-out), box-shadow .3s var(--ease-out), background-color .2s, border-color .2s;
+}
+.btn:hover { border-color: var(--ink); transform: translateY(-1px); }
+.btn:active { transform: translateY(0); }
+.btn svg { width: 18px; height: 18px; flex: none; }
+.btn-primary { --b-bg: var(--gold-glow); --b-fg: var(--on-gold); --b-bd: var(--gold-glow); box-shadow: 0 1px 0 rgba(0,0,0,.08), 0 10px 24px -12px rgba(201, 143, 29, .8); }
+.btn-primary:hover { border-color: var(--gold-glow); box-shadow: 0 2px 0 rgba(0,0,0,.08), 0 16px 34px -12px rgba(201, 143, 29, .95); }
+.btn-small { min-height: 40px; padding: 10px 16px; font-size: .95rem; }
+
+.link-arrow { display: inline-flex; align-items: center; gap: 8px; font-weight: 700; text-decoration: none; }
+.link-arrow svg { width: 18px; height: 18px; transition: transform .3s var(--ease-out); }
+.link-arrow:hover svg { transform: translateX(4px); }
+
+/* Status pill (open / closed) */
+.status { display: inline-flex; align-items: center; gap: 9px; font-weight: 600; font-size: .95rem; color: var(--muted); }
+.status .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--line-strong); flex: none; }
+.status[data-open="true"] .dot { background: var(--fuel); box-shadow: 0 0 0 4px color-mix(in srgb, var(--fuel) 22%, transparent); }
+.status[data-open="false"] .dot { background: var(--danger); }
+.status b { color: var(--ink); font-weight: 700; }
+
+/* Page intro used by inner pages */
+.page-head { position: relative; overflow: hidden; border-bottom: 1px solid var(--line); background: linear-gradient(180deg, color-mix(in srgb, var(--sky-top) 22%, var(--bg)) 0%, var(--bg) 100%); }
+.page-head .wrap { position: relative; z-index: 1; padding-top: clamp(130px, 16vw, 190px); padding-bottom: clamp(48px, 6vw, 80px); display: grid; gap: 22px; }
+.page-head canvas { position: absolute; inset: 0; width: 100%; height: 100%; opacity: .9; pointer-events: none; }
+
+.visually-hidden { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.skip { position: absolute; left: 12px; top: -60px; z-index: 100; background: var(--gold-glow); color: var(--on-gold); padding: 10px 16px; border-radius: 10px; font-weight: 700; }
+.skip:focus { top: 12px; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+}

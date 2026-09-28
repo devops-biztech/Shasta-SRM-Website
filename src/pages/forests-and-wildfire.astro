@@ -1,0 +1,63 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import FireDemo from '../components/FireDemo.astro';
+import Icon from '../components/Icon.astro';
+---
+<Base title="Forests & wildfire" description="Why thinning overgrown forests reduces wildfire risk in the North State, and why the wood that comes out is better off making power than going up in smoke.">
+  <PageHead title="Thinner forests burn cooler." lede="Many North State forests are far more crowded than they used to be. Thinning them makes fires easier to fight, and the wood that comes out has to go somewhere. We turn it into power." place="trinity" />
+
+  <section class="section-tight" aria-labelledby="demo-title">
+    <div class="wrap stack" style="--gap: 32px">
+      <div class="head">
+        <h2 id="demo-title">One spark, two forests.</h2>
+        <p class="lede">Both stands grow the same trees. One has been thinned. Drop a spark on each and watch what happens.</p>
+      </div>
+      <FireDemo />
+    </div>
+  </section>
+
+  <section class="section-tight surface" aria-label="Why thinning matters">
+    <div class="wrap prose-grid">
+      <article class="stack">
+        <h2>The problem: too much fuel</h2>
+        <p>For about a century, fires in western forests were put out as fast as possible. Without regular, low-intensity fire to clear them, small trees and brush filled in the spaces between the big trees.</p>
+        <p>That crowded understory works like a ladder. A fire that would have crept along the ground can climb into the crowns, where it spreads fast and is far harder to stop.</p>
+      </article>
+      <article class="stack">
+        <h2>What thinning does</h2>
+        <p>Thinning removes the small trees and brush and leaves the larger, healthier trees with room to grow. With gaps between the crowns, a fire is more likely to stay on the ground, where crews can fight it.</p>
+        <p>Thinning isn’t a guarantee against wildfire. It gives firefighters and forests a better chance.</p>
+      </article>
+      <article class="stack">
+        <h2>Where the wood goes</h2>
+        <p>Most thinning material has little value as lumber. Without a plant to take it, it is often piled and burned in the open or left to dry on the forest floor.</p>
+        <p>Our plant takes that material from projects in the Shasta-Trinity and Lassen National Forests and from private land, and turns it into renewable electricity instead.</p>
+      </article>
+      <article class="stack">
+        <h2>Energy, not just smoke</h2>
+        <p>An open burn pile sends all of its energy into the air. In our boiler the fire is controlled, and its heat makes the steam that drives a 55-megawatt generator.</p>
+        <a class="link-arrow" href="/how-it-works/">See how the plant works <Icon name="arrow-right" /></a>
+      </article>
+    </div>
+  </section>
+
+  <section class="section-tight" aria-labelledby="help-title">
+    <div class="wrap cta">
+      <h2 id="help-title">Have clean wood to get rid of?</h2>
+      <p class="lede">Tree limbs, logs, pallets, and clean lumber can come to our yard free of charge instead of the burn pile.</p>
+      <a class="btn btn-primary" href="/drop-off/">Drop-off hours and rules <Icon name="arrow-right" /></a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .head { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 64px; align-items: end; }
+  .surface { background: var(--surface); border-block: 1px solid var(--line); }
+  .prose-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(40px, 6vw, 80px) clamp(32px, 6vw, 96px); }
+  .prose-grid article { --gap: 14px; max-width: 58ch; }
+  .prose-grid h2 { font-size: clamp(1.5rem, 2.4vw, 2rem); }
+  .prose-grid p { color: var(--muted); line-height: 1.7; }
+  .cta { display: grid; gap: 18px; justify-items: start; }
+  @media (max-width: 860px) { .head, .prose-grid { grid-template-columns: 1fr; } }
+</style>

@@ -1,0 +1,29 @@
+---
+import Icon from './Icon.astro';
+import { docs } from '../data/site';
+interface Props { audience: 'public' | 'crew' }
+const list = docs.filter((d) => d.audience === Astro.props.audience);
+---
+<ul class="docs">
+  {list.map((d) => (
+    <li>
+      <a href={d.href} target="_blank" rel="noopener">
+        <Icon name="file" size={26} />
+        <span class="t"><b>{d.title}</b><span>{d.desc}</span></span>
+        <span class="meta">PDF · {d.size}<Icon name="download" size={18} /></span>
+      </a>
+    </li>
+  ))}
+</ul>
+
+<style>
+  .docs { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+  a { display: grid; grid-template-columns: auto 1fr auto; gap: 16px; align-items: center; padding: 18px 20px; border-radius: 16px; background: var(--surface); border: 1px solid var(--line); text-decoration: none; transition: border-color .2s, transform .3s var(--ease-out), box-shadow .3s var(--ease-out); }
+  a:hover { border-color: var(--line-strong); transform: translateY(-2px); box-shadow: var(--shadow-1); }
+  a > :global(svg) { color: var(--fuel); }
+  .t { display: grid; gap: 2px; }
+  .t b { font-weight: 700; }
+  .t span { color: var(--muted); font-size: .92rem; }
+  .meta { display: inline-flex; gap: 8px; align-items: center; color: var(--muted); font-size: .85rem; font-weight: 600; white-space: nowrap; }
+  @media (max-width: 520px) { a { grid-template-columns: auto 1fr; } .meta { grid-column: 2; } }
+</style>

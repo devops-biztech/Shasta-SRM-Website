@@ -1,0 +1,110 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import HoursTable from '../components/HoursTable.astro';
+import DocList from '../components/DocList.astro';
+import OpenStatus from '../components/OpenStatus.astro';
+import Icon from '../components/Icon.astro';
+import { dropoff, org } from '../data/site';
+---
+<Base title="Wood waste drop-off" description="Drop off tree limbs, logs, pallets, and clean lumber for free at Shasta SRM in Anderson, CA. Hours, what we accept, and yard rules.">
+  <PageHead title="Drop off clean wood, free." lede="Our Wood to Energy Recycling Program takes clean tree wood and lumber from the public at no cost, and turns it into electricity. Here’s what to bring and how the yard works." place="anderson">
+    <div class="cluster head-meta">
+      <OpenStatus schedule="dropoff" />
+      <a class="link-arrow" href={org.mapsUrl} target="_blank" rel="noopener"><Icon name="pin" />{org.address.street}, {org.address.city}</a>
+    </div>
+  </PageHead>
+
+  <section class="section-tight" aria-labelledby="what-title">
+    <div class="wrap stack" style="--gap: 32px">
+      <div class="lead-row">
+        <h2 id="what-title">What we accept</h2>
+        <p class="muted">Every load is inspected. <b>Any</b> unacceptable material and the whole load is turned away. We can’t sort it for you.</p>
+      </div>
+      <div class="lists">
+        <div class="list yes">
+          <h3><Icon name="check" size={24} />Bring these</h3>
+          <ul>{dropoff.accepted.map((a) => <li>{a}</li>)}</ul>
+          <p class="fine">Wood must be unpainted and untreated.</p>
+        </div>
+        <div class="list no">
+          <h3><Icon name="x" size={24} />Not these</h3>
+          <ul>{dropoff.rejected.map((a) => <li>{a}</li>)}</ul>
+          <p class="fine">…and anything else that isn’t tree wood or clean lumber.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-tight surface" aria-labelledby="visit-title">
+    <div class="wrap grid">
+      <div class="stack" style="--gap: 24px">
+        <h2 id="visit-title">When you arrive</h2>
+        <ol class="arrive">
+          <li><span><b>Use the public gate.</b> Never the truck gate.</span></li>
+          <li><span><b>Stop at the stop sign and wait.</b> An attendant has to be there before anything is unloaded.</span></li>
+          <li><span><b>Let the attendant inspect your load.</b> They’ll tell you whether it’s accepted and where to unload.</span></li>
+          <li><span><b>Unload where you’re directed</b>, at least 10 feet from anyone else.</span></li>
+        </ol>
+      </div>
+      <HoursTable schedule="dropoff" heading="Public drop-off hours" />
+    </div>
+  </section>
+
+  <section class="section-tight" aria-labelledby="rules-title">
+    <div class="wrap grid">
+      <div class="stack">
+        <h2 id="rules-title">Yard rules</h2>
+        <p class="lede">The yard is a working fuel yard with heavy equipment and a high fire danger. These rules keep everyone safe, and keep this service free.</p>
+        <p class="muted">Questions about the program? Call <a href={`tel:${org.phone.dropoff}`}>{org.phone.dropoff}</a>, option 2.</p>
+      </div>
+      <ul class="rules">{dropoff.rules.map((r) => <li>{r}</li>)}</ul>
+    </div>
+  </section>
+
+  <section class="section-tight surface" aria-labelledby="docs-title">
+    <div class="wrap grid">
+      <div class="stack">
+        <h2 id="docs-title">Print the handout</h2>
+        <p class="muted">The same information as this page, ready to print and keep in the truck.</p>
+      </div>
+      <DocList audience="public" />
+    </div>
+  </section>
+
+  <section class="section-tight" aria-labelledby="haul-title">
+    <div class="wrap grid">
+      <div class="stack">
+        <h2 id="haul-title">Hauling fuel commercially?</h2>
+        <p class="muted">Contractors and haulers delivering fuel use the truck gate and the commercial schedule. Drivers need to read our Safety Rules Book before they arrive.</p>
+        <a class="link-arrow" href="/safety/">Safety requirements <Icon name="arrow-right" /></a>
+      </div>
+      <HoursTable schedule="delivery" heading="Commercial delivery hours" />
+    </div>
+  </section>
+</Base>
+
+<style>
+  .head-meta { --gap: 12px 28px; }
+  .lead-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 64px; align-items: end; }
+  .lists { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(20px, 3vw, 32px); }
+  .list { padding: clamp(22px, 3vw, 32px); border-radius: var(--radius); border: 1px solid var(--line); background: var(--surface); display: grid; gap: 16px; align-content: start; }
+  .list h3 { display: flex; gap: 10px; align-items: center; }
+  .yes h3 :global(svg) { color: var(--fuel); }
+  .no h3 :global(svg) { color: var(--danger); }
+  .list ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 0; }
+  .list li { padding: 10px 0; border-bottom: 1px solid var(--line); }
+  .list li:last-child { border-bottom: 0; }
+  .fine { color: var(--muted); font-size: .92rem; }
+  .surface { background: var(--surface); border-block: 1px solid var(--line); }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 36px clamp(32px, 6vw, 88px); align-items: start; }
+  .arrive { margin: 0; padding: 0; list-style: none; counter-reset: a; display: grid; gap: 16px; }
+  .arrive li { counter-increment: a; display: grid; grid-template-columns: 40px 1fr; gap: 12px; color: var(--muted); }
+  .arrive li::before { content: counter(a); width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center; font: 800 .95rem/1 var(--display); background: var(--fuel); color: var(--bg); }
+  .arrive b { color: var(--ink); }
+  .arrive span { padding-top: 4px; }
+  .rules { margin: 0; padding: 0; list-style: none; display: grid; }
+  .rules li { padding: 14px 0 14px 28px; border-bottom: 1px solid var(--line); position: relative; }
+  .rules li::before { content: ""; position: absolute; left: 4px; top: 23px; width: 8px; height: 8px; border-radius: 2px; background: var(--gold-glow); transform: rotate(45deg); }
+  @media (max-width: 860px) { .lead-row, .lists, .grid { grid-template-columns: 1fr; } }
+</style>

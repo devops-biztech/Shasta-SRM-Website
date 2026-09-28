@@ -1,0 +1,13 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import { nav } from '../data/site';
+---
+<Base title="Page not found" description="That page isn’t here.">
+  <PageHead title="This trail doesn’t go anywhere." lede="The page you were looking for has moved or never existed. Try one of these instead." place="lassen">
+    <div class="cluster">
+      <a class="btn btn-primary" href="/">Back to the homepage</a>
+      {nav.map((n) => <a class="btn" href={n.href}>{n.label}</a>)}
+    </div>
+  </PageHead>
+</Base>

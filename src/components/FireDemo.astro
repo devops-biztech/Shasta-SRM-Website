@@ -1,0 +1,134 @@
+---
+// Two stands, one spark. A simple percolation model of fire moving through tree cover. Illustrative only.
+interface Props { compact?: boolean }
+const { compact = false } = Astro.props;
+---
+<div class:list={['fire', { compact }]} data-fire>
+  <div class="plots">
+    <figure>
+      <canvas data-plot="dense" role="img" aria-label="Overgrown stand: trees packed closely together."></canvas>
+      <figcaption><b>Overgrown</b><span data-result="dense">About 78% tree cover, with brush filling the gaps.</span></figcaption>
+    </figure>
+    <figure>
+      <canvas data-plot="thin" role="img" aria-label="Thinned stand: about half as many trees, with open space between them."></canvas>
+      <figcaption><b>Thinned</b><span data-result="thin">About half the tree cover, with room between the crowns.</span></figcaption>
+    </figure>
+  </div>
+  <div class="controls">
+    <button class="btn btn-primary" type="button" data-spark>Drop a spark</button>
+    <button class="btn" type="button" data-reset hidden>Reset</button>
+    <p class="note">A simple model of how fire moves from tree to tree. It shows the idea, not a forecast for any real forest.</p>
+  </div>
+  <p class="visually-hidden" aria-live="polite" data-live></p>
+</div>
+
+<style>
+  .fire { display: grid; gap: 24px; }
+  .plots { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(14px, 3vw, 28px); }
+  figure { margin: 0; display: grid; gap: 12px; }
+  canvas { display: block; width: 100%; height: auto; aspect-ratio: 1; border-radius: 14px; background: var(--surface-2); box-shadow: var(--shadow-1); }
+  figcaption { display: grid; gap: 2px; }
+  figcaption b { font: 800 1.25rem/1.2 var(--display); letter-spacing: -.02em; }
+  figcaption span { color: var(--muted); font-size: .95rem; }
+  .controls { display: flex; flex-wrap: wrap; gap: 12px 16px; align-items: center; }
+  .note { color: var(--muted); font-size: .9rem; max-width: 52ch; }
+  .compact .plots { gap: 14px; }
+  @media (max-width: 520px) { .plots { gap: 10px; } figcaption span { font-size: .85rem; } }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-fire]').forEach((root) => {
+    const G = 60; // 60×60 cells, drawn at the canvas's real device-pixel size so trees stay crisp
+    type Plot = { el: HTMLCanvasElement; ctx: CanvasRenderingContext2D; cells: Uint8Array; density: number; seed: number; cell: number };
+    // 0 empty, 1 tree, 2 burning, 3 burned
+    const plots: Record<string, Plot> = {};
+    // With these stands and this spark, the overgrown stand burns out completely and the thinned one stops at about 10%.
+    for (const [key, density, seed] of [['dense', 0.78, 11], ['thin', 0.54, 26]] as const) {
+      const el = root.querySelector<HTMLCanvasElement>(`[data-plot="${key}"]`)!;
+      plots[key] = { el, ctx: el.getContext('2d')!, cells: new Uint8Array(G * G), density, seed, cell: 5 };
+    }
+    const live = root.querySelector<HTMLElement>('[data-live]')!;
+    const spark = root.querySelector<HTMLButtonElement>('[data-spark]')!;
+    const reset = root.querySelector<HTMLButtonElement>('[data-reset]')!;
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const colors = () => {
+      const night = document.documentElement.classList.contains('night');
+      return {
+        ground: night ? '#16263d' : '#e4eae5', tree: night ? '#4f9a62' : '#3a6b45',
+        fire: ['#ffd36b', '#f08a3a', '#d8552a'], ash: night ? '#3a4150' : '#8a8f8a',
+      };
+    };
+    function seedPlot(p: Plot) {
+      let s = p.seed; const rnd = () => (s = (s * 9301 + 49297) % 233280) / 233280;
+      for (let i = 0; i < G * G; i++) p.cells[i] = rnd() < p.density ? 1 : 0;
+    }
+    function fit(p: Plot) {
+      const dpr = Math.min(3, devicePixelRatio || 1), w = p.el.clientWidth;
+      if (!w) return;
+      p.cell = Math.max(2, Math.floor((w * dpr) / G));
+      p.el.width = p.el.height = G * p.cell;
+    }
+    function draw(p: Plot, t = 0) {
+      const c = colors(), ctx = p.ctx, S = p.cell;
+      ctx.fillStyle = c.ground; ctx.fillRect(0, 0, G * S, G * S);
+      const r = S * 0.42, gap = Math.max(1, Math.round(S * 0.12));
+      for (let i = 0; i < G * G; i++) {
+        const v = p.cells[i]; if (!v) continue;
+        const x = (i % G) * S, y = Math.floor(i / G) * S;
+        ctx.fillStyle = v === 1 ? c.tree : v === 2 ? c.fire[(i + t) % 3] : c.ash;
+        if (v === 1) { ctx.beginPath(); ctx.arc(x + S / 2, y + S / 2, r, 0, 6.2832); ctx.fill(); }
+        else ctx.fillRect(x + gap, y + gap, S - 2 * gap, S - 2 * gap);
+      }
+    }
+    function step(p: Plot) {
+      const next = p.cells.slice(); let burning = 0;
+      for (let i = 0; i < G * G; i++) {
+        if (p.cells[i] !== 2) continue;
+        next[i] = 3;
+        const x = i % G, y = Math.floor(i / G);
+        for (const [dx, dy] of [[1, 0], [-1, 0], [0, 1], [0, -1]]) {
+          const nx = x + dx, ny = y + dy; if (nx < 0 || ny < 0 || nx >= G || ny >= G) continue;
+          const j = ny * G + nx; if (p.cells[j] === 1) { next[j] = 2; burning++; }
+        }
+      }
+      p.cells.set(next);
+      return burning;
+    }
+    const burnedPct = (p: Plot) => {
+      let trees = 0, burned = 0; for (const v of p.cells) { if (v) trees++; if (v === 3 || v === 2) burned++; }
+      return Math.round((burned / Math.max(1, trees)) * 100);
+    };
+    function resetAll() {
+      for (const p of Object.values(plots)) { seedPlot(p); draw(p); }
+      root.querySelector('[data-result="dense"]')!.textContent = 'About 78% tree cover, with brush filling the gaps.';
+      root.querySelector('[data-result="thin"]')!.textContent = 'About half the tree cover, with room between the crowns.';
+      spark.hidden = false; reset.hidden = true; spark.disabled = false;
+    }
+    function run() {
+      spark.disabled = true;
+      for (const p of Object.values(plots)) {
+        // ignite the left edge's middle rows in both stands
+        for (let y = 26; y < 34; y++) for (let x = 0; x < 2; x++) { const i = y * G + x; if (p.cells[i] === 1) p.cells[i] = 2; }
+      }
+      let t = 0;
+      const tick = () => {
+        t++;
+        let active = 0;
+        for (const p of Object.values(plots)) { active += step(p); draw(p, t); }
+        if (active > 0 && t < 400) { reduce ? tick() : setTimeout(() => requestAnimationFrame(tick), 55); return; }
+        const d = burnedPct(plots.dense), th = burnedPct(plots.thin);
+        root.querySelector('[data-result="dense"]')!.textContent = `The fire reached ${d}% of the trees.`;
+        root.querySelector('[data-result="thin"]')!.textContent = `The fire reached ${th}% of the trees.`;
+        live.textContent = `In the overgrown stand the fire reached ${d}% of trees. In the thinned stand it reached ${th}%.`;
+        spark.hidden = true; reset.hidden = false; reset.focus();
+      };
+      tick();
+    }
+    spark.addEventListener('click', run);
+    reset.addEventListener('click', () => { resetAll(); spark.focus(); });
+    new MutationObserver(() => Object.values(plots).forEach((p) => draw(p))).observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+    new ResizeObserver(() => Object.values(plots).forEach((p) => { fit(p); draw(p); })).observe(root.querySelector('.plots')!);
+    resetAll();
+  });
+</script>

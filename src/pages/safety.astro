@@ -1,0 +1,64 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import DocList from '../components/DocList.astro';
+import Icon from '../components/Icon.astro';
+import { org } from '../data/site';
+---
+<Base title="Safety" description="Safety rules for visitors, drop-off customers, contractors, and drivers at Shasta SRM in Anderson, CA, including the Safety Rules Book and acknowledgement form.">
+  <PageHead title="Safety comes first here." lede="A power plant and a fuel yard are working industrial sites. Whether you’re dropping off a trailer of limbs or starting a shift, here is what we ask of you." place="anderson" />
+
+  <section class="section-tight" aria-labelledby="crew-title">
+    <div class="wrap grid">
+      <div class="stack" style="--gap: 22px">
+        <h2 id="crew-title">Employees, contractors, and drivers</h2>
+        <p class="lede">Before you work on site, read our Safety Rules Book and sign the acknowledgement.</p>
+        <ol class="do">
+          <li><span>Read the <b>Safety Rules Book</b> (OHS-3300).</span></li>
+          <li><span>Print and sign the <b>Acknowledgement of Receipt</b>.</span></li>
+          <li><span><b>Bring it with you</b> when you arrive, or return it within 10 days of receiving the book.</span></li>
+        </ol>
+        <p class="muted">Questions about the rules go to your supervisor, manager, or our health and safety manager. Main office: <a href={`tel:${org.phone.main}`}>{org.phone.main}</a>.</p>
+      </div>
+      <DocList audience="crew" />
+    </div>
+  </section>
+
+  <section class="section-tight surface" aria-labelledby="public-title">
+    <div class="wrap grid">
+      <div class="stack" style="--gap: 22px">
+        <h2 id="public-title">Drop-off customers</h2>
+        <p class="lede">Our recycling yard shares space with heavy equipment and a very high fire danger. Follow the attendant, and the yard rules.</p>
+        <a class="link-arrow" href="/drop-off/">Hours, accepted materials, and yard rules <Icon name="arrow-right" /></a>
+      </div>
+      <DocList audience="public" />
+    </div>
+  </section>
+
+  <section class="section-tight" aria-labelledby="always-title">
+    <div class="wrap stack" style="--gap: 28px">
+      <h2 id="always-title">On site, always</h2>
+      <ul class="always">
+        <li><b>5 MPH.</b> Heavy equipment and trucks have the right of way.</li>
+        <li><b>No smoking, anywhere.</b> Fire danger in the yard is extremely high.</li>
+        <li><b>Sturdy footwear.</b> Boots recommended; no sandals.</li>
+        <li><b>Phones down while driving.</b> Park and turn off the engine first.</li>
+        <li><b>If the siren sounds,</b> follow our employees to the muster point.</li>
+        <li><b>Follow every instruction</b> from SRM staff and posted signs.</li>
+      </ul>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 36px clamp(32px, 6vw, 88px); align-items: start; }
+  .surface { background: var(--surface); border-block: 1px solid var(--line); }
+  .do { margin: 0; padding: 0; list-style: none; counter-reset: d; display: grid; gap: 14px; }
+  .do li { counter-increment: d; display: grid; grid-template-columns: 40px 1fr; gap: 12px; align-items: start; }
+  .do li::before { content: counter(d); width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center; font: 800 .95rem/1 var(--display); background: var(--fuel); color: var(--bg); }
+  .do span { padding-top: 4px; }
+  .always { margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 40px; }
+  .always li { padding: 18px 0; border-top: 1px solid var(--line); color: var(--muted); }
+  .always b { color: var(--ink); display: block; font: 800 1.2rem/1.2 var(--display); letter-spacing: -.02em; margin-bottom: 4px; }
+  @media (max-width: 860px) { .grid { grid-template-columns: 1fr; } .always { grid-template-columns: 1fr; } }
+</style>

@@ -1,0 +1,103 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHead from '../../components/PageHead.astro';
+import Icon from '../../components/Icon.astro';
+import { openJobs } from '../../lib/jobs';
+import { org } from '../../data/site';
+import { render } from 'astro:content';
+const jobs = await openJobs();
+const rendered = await Promise.all(jobs.map(async (j) => ({ j, Content: (await render(j)).Content })));
+---
+<Base title="Careers" description="Open positions at Shasta SRM in Anderson, CA: plant operators, mechanics, equipment operators, and laborers. Pay is posted on every role.">
+  <PageHead title="Join the crew that keeps the lights on." lede="Skilled, steady work at a 55-megawatt renewable power plant in Anderson. Every role lists its pay up front." place="anderson">
+    <div class="cluster">
+      <a class="btn btn-primary" href={org.applyUrl} target="_blank" rel="noopener">Apply online <Icon name="arrow-up-right" /></a>
+      <a class="btn" href="#how-to-apply">Other ways to apply</a>
+    </div>
+  </PageHead>
+
+  <section class="section-tight" aria-labelledby="open-title">
+    <div class="wrap stack" style="--gap: 28px">
+      <div class="list-head">
+        <h2 id="open-title">Open positions</h2>
+        <p class="muted">{jobs.length} roles · accepting applications until filled</p>
+      </div>
+      <div class="jobs">
+        {rendered.map(({ j, Content }) => (
+          <article class="job" id={j.id} aria-labelledby={`${j.id}-t`}>
+            <div class="job-main stack" style="--gap: 12px">
+              <h3 id={`${j.id}-t`}>{j.data.title}</h3>
+              <div class="desc"><Content /></div>
+              {j.data.schedule && <p class="sched"><Icon name="clock" size={18} />{j.data.schedule}</p>}
+            </div>
+            <div class="job-side">
+              <table class="pay">
+                <caption class="visually-hidden">Pay for {j.data.title}</caption>
+                <tbody>
+                  {j.data.levels.map((l) => <tr><th scope="row">{l.name}</th><td>${l.wage.toFixed(2)}<span>/hr</span></td></tr>)}
+                </tbody>
+              </table>
+              {j.data.requirements.length > 0 && (
+                <ul class="reqs">
+                  {j.data.requirements.map((r) => <li><Icon name="check" size={18} />{r}</li>)}
+                </ul>
+              )}
+              <a class="btn btn-small" href={org.applyUrl} target="_blank" rel="noopener" aria-label={`Apply for ${j.data.title}`}>Apply <Icon name="arrow-up-right" /></a>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section-tight apply" id="how-to-apply" aria-labelledby="apply-title">
+    <div class="wrap grid">
+      <div class="stack">
+        <h2 id="apply-title">How to apply</h2>
+        <p class="lede">Apply whichever way is easiest for you. Our HR team answers questions Monday through Saturday.</p>
+      </div>
+      <ol class="ways">
+        <li><Icon name="arrow-up-right" size={24} /><div><h3>Online</h3><p>Fill out the application at <a href={org.applyUrl} target="_blank" rel="noopener">apply.srm-energy.com</a>.</p></div></li>
+        <li><Icon name="mail" size={24} /><div><h3>By email</h3><p>Send your application or résumé to <a href={`mailto:${org.email.hr}`}>{org.email.hr}</a>.</p></div></li>
+        <li><Icon name="pin" size={24} /><div><h3>By mail</h3><p>{org.name}<br />{org.address.street}, {org.address.city}, {org.address.state} {org.address.zip}</p></div></li>
+      </ol>
+      <aside class="hr stack">
+        <h3>Questions about a role?</h3>
+        <p><b>{org.hr.name}</b>, {org.hr.title}<br /><span class="muted">{org.hr.hours}</span></p>
+        <p><a href={`tel:${org.phone.main}`}>{org.phone.main}</a><br /><a href={`mailto:${org.email.hr}`}>{org.email.hr}</a></p>
+      </aside>
+      <p class="policy"><Icon name="shield" size={22} /><span><b>Zero tolerance for drugs and alcohol.</b> This applies to every role, from the day you’re hired and throughout your employment.</span></p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .list-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 8px 24px; }
+  .jobs { display: grid; border-top: 1px solid var(--line); }
+  .job { display: grid; grid-template-columns: 1.3fr 1fr; gap: 24px clamp(28px, 5vw, 72px); padding-block: 36px; border-bottom: 1px solid var(--line); scroll-margin-top: 96px; }
+  .job:target { background: linear-gradient(90deg, color-mix(in srgb, var(--gold-glow) 12%, transparent), transparent 70%); }
+  .job h3 { font-size: clamp(1.5rem, 2.4vw, 2rem); }
+  .desc :global(p) { color: var(--muted); max-width: 56ch; }
+  .sched { display: inline-flex; gap: 8px; align-items: center; font-weight: 600; font-size: .95rem; }
+  .job-side { display: grid; gap: 18px; align-content: start; justify-items: start; }
+  .pay { border-collapse: collapse; width: 100%; }
+  .pay th, .pay td { padding: 8px 0; border-bottom: 1px solid var(--line); text-align: left; }
+  .pay th { font-weight: 600; color: var(--muted); }
+  .pay td { text-align: right; font: 800 1.35rem/1 var(--display); letter-spacing: -.02em; color: var(--gold); }
+  .pay td span { font: 600 .85rem var(--body); color: var(--muted); margin-left: 2px; }
+  .reqs { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
+  .reqs li { display: flex; gap: 10px; align-items: flex-start; }
+  .reqs :global(svg) { color: var(--fuel); margin-top: 3px; flex: none; }
+  .apply { background: var(--surface); border-block: 1px solid var(--line); }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px clamp(32px, 6vw, 88px); }
+  .ways { list-style: none; padding: 0; margin: 0; display: grid; gap: 22px; }
+  .ways li { display: grid; grid-template-columns: auto 1fr; gap: 16px; }
+  .ways :global(svg) { color: var(--fuel); margin-top: 2px; }
+  .ways h3 { font-size: 1.2rem; margin-bottom: 4px; }
+  .ways p { color: var(--muted); }
+  .hr { --gap: 10px; padding: 24px; border-radius: var(--radius); border: 1px solid var(--line); background: var(--bg); align-self: start; }
+  .hr h3 { font-size: 1.2rem; }
+  .policy { grid-column: 1 / -1; display: flex; gap: 14px; align-items: flex-start; padding-top: 24px; border-top: 1px solid var(--line); max-width: 72ch; }
+  .policy :global(svg) { color: var(--fuel); flex: none; margin-top: 2px; }
+  @media (max-width: 860px) { .job, .grid { grid-template-columns: 1fr; } }
+</style>

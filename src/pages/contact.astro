@@ -1,0 +1,59 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import HoursTable from '../components/HoursTable.astro';
+import Icon from '../components/Icon.astro';
+import { org } from '../data/site';
+---
+<Base title="Contact" description="Contact Shasta SRM in Anderson, CA: main office, wood waste drop-off line, and HR.">
+  <PageHead title="Get in touch." lede="We’re at 20811 Industry Road in Anderson. Call the number that fits, and we’ll get you to the right person." place="anderson" />
+
+  <section class="section-tight" aria-label="Contact details">
+    <div class="wrap grid">
+      <div class="lines">
+        <div class="line">
+          <h2>Main office</h2>
+          <a class="big" href={`tel:${org.phone.main}`}><Icon name="phone" size={22} />{org.phone.main}</a>
+          <a href={`mailto:${org.email.office}`}>{org.email.office}</a>
+        </div>
+        <div class="line">
+          <h2>Wood waste drop-off</h2>
+          <a class="big" href={`tel:${org.phone.dropoff}`}><Icon name="phone" size={22} />{org.phone.dropoff}</a>
+          <p class="muted">Choose option 2 for hours and program information.</p>
+        </div>
+        <div class="line">
+          <h2>Jobs and HR</h2>
+          <p><b>{org.hr.name}</b>, {org.hr.title}</p>
+          <a href={`mailto:${org.email.hr}`}>{org.email.hr}</a>
+          <p class="muted">{org.hr.hours}</p>
+        </div>
+        <div class="line">
+          <h2>Visit</h2>
+          <p>{org.address.street}<br />{org.address.city}, {org.address.state} {org.address.zip}</p>
+          <a class="link-arrow" href={org.mapsUrl} target="_blank" rel="noopener">Directions <Icon name="arrow-up-right" /></a>
+        </div>
+        <div class="line">
+          <h2>Follow along</h2>
+          <div class="cluster">
+            <a class="btn btn-small" href={org.social.facebook} target="_blank" rel="noopener"><Icon name="facebook" />Facebook</a>
+            <a class="btn btn-small" href={org.social.linkedin} target="_blank" rel="noopener"><Icon name="linkedin" />LinkedIn</a>
+          </div>
+        </div>
+      </div>
+      <aside class="side">
+        <HoursTable schedule="dropoff" heading="Public drop-off hours" />
+      </aside>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 40px clamp(32px, 6vw, 88px); align-items: start; }
+  .lines { display: grid; }
+  .line { display: grid; gap: 6px; padding-block: 26px; border-top: 1px solid var(--line); }
+  .line h2 { font: 700 .95rem/1 var(--body); letter-spacing: .01em; color: var(--muted); margin-bottom: 6px; }
+  .big { display: inline-flex; gap: 12px; align-items: center; font: 800 clamp(1.6rem, 3vw, 2.2rem)/1.1 var(--display); letter-spacing: -.02em; text-decoration: none; }
+  .big :global(svg) { color: var(--fuel); }
+  .side { padding: 28px; border-radius: var(--radius); background: var(--surface); border: 1px solid var(--line); position: sticky; top: 100px; }
+  @media (max-width: 860px) { .grid { grid-template-columns: 1fr; } .side { position: static; } }
+</style>

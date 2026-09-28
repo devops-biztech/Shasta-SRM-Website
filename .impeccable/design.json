@@ -1,0 +1,645 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-25T19:02:35.487Z",
+  "title": "Design System: Shasta SRM",
+  "extensions": {
+    "colorMeta": {
+      "valley-mist": {
+        "role": "neutral",
+        "displayName": "Valley Mist",
+        "canonical": "#eef1ec",
+        "tonalRamp": [
+          "#0a0c0a",
+          "#242623",
+          "#41433f",
+          "#60625e",
+          "#81837f",
+          "#a3a6a2",
+          "#c8cac6",
+          "#edefec"
+        ]
+      },
+      "paper": {
+        "role": "neutral",
+        "displayName": "Paper",
+        "canonical": "#f8faf8",
+        "tonalRamp": [
+          "#0b0b0b",
+          "#242524",
+          "#414241",
+          "#606260",
+          "#818381",
+          "#a4a5a4",
+          "#c8c9c8",
+          "#edefed"
+        ]
+      },
+      "sage-wash": {
+        "role": "neutral",
+        "displayName": "Sage Wash",
+        "canonical": "#e4eae5",
+        "tonalRamp": [
+          "#0a0c0a",
+          "#232623",
+          "#3f4340",
+          "#5e635f",
+          "#7f847f",
+          "#a1a6a2",
+          "#c6cac7",
+          "#ecf0ec"
+        ]
+      },
+      "conifer-ink": {
+        "role": "neutral",
+        "displayName": "Conifer Ink",
+        "canonical": "#13241c",
+        "tonalRamp": [
+          "#050d09",
+          "#1d2822",
+          "#38463f",
+          "#55665d",
+          "#74887e",
+          "#98aaa1",
+          "#bdcec5",
+          "#e4f3eb"
+        ]
+      },
+      "lichen": {
+        "role": "neutral",
+        "displayName": "Lichen",
+        "canonical": "#4a5b53",
+        "tonalRamp": [
+          "#060d0a",
+          "#1d2823",
+          "#38453f",
+          "#56655e",
+          "#75877f",
+          "#99aaa2",
+          "#becdc6",
+          "#e5f2ec"
+        ]
+      },
+      "hairline": {
+        "role": "neutral",
+        "displayName": "Hairline",
+        "canonical": "#d3ddd8",
+        "tonalRamp": [
+          "#080c0a",
+          "#212624",
+          "#3d4441",
+          "#5c635f",
+          "#7c8580",
+          "#9fa7a3",
+          "#c3cbc7",
+          "#e9f0ed"
+        ]
+      },
+      "hairline-strong": {
+        "role": "neutral",
+        "displayName": "Hairline Strong",
+        "canonical": "#b7c5be",
+        "tonalRamp": [
+          "#070d0a",
+          "#202723",
+          "#3b4540",
+          "#59645f",
+          "#79867f",
+          "#9ca8a2",
+          "#c1ccc7",
+          "#e7f1ec"
+        ]
+      },
+      "fuel-green": {
+        "role": "secondary",
+        "displayName": "Fuel Green",
+        "canonical": "#2f7a45",
+        "tonalRamp": [
+          "#001200",
+          "#002f0f",
+          "#144f27",
+          "#2f7142",
+          "#4c955e",
+          "#76b784",
+          "#a0daac",
+          "#cbfed4"
+        ]
+      },
+      "power-gold": {
+        "role": "secondary",
+        "displayName": "Power Gold (day text)",
+        "canonical": "#9a6a06",
+        "tonalRamp": [
+          "#1a0500",
+          "#3a1d00",
+          "#5d3a00",
+          "#825800",
+          "#a87822",
+          "#c99c57",
+          "#ebc285",
+          "#ffe8b3"
+        ]
+      },
+      "action-amber": {
+        "role": "primary",
+        "displayName": "Action Amber",
+        "canonical": "#f0b93f",
+        "tonalRamp": [
+          "#1b0400",
+          "#3c1d00",
+          "#5f3900",
+          "#855700",
+          "#ac7800",
+          "#cc9d33",
+          "#edc26c",
+          "#ffe99f"
+        ]
+      },
+      "on-amber": {
+        "role": "primary",
+        "displayName": "On Amber",
+        "canonical": "#1b1a10",
+        "tonalRamp": [
+          "#0c0b06",
+          "#26251e",
+          "#434239",
+          "#636257",
+          "#848377",
+          "#a7a69a",
+          "#cbcabf",
+          "#f0efe5"
+        ]
+      },
+      "danger": {
+        "role": "neutral",
+        "displayName": "Danger",
+        "canonical": "#a3372b",
+        "tonalRamp": [
+          "#250000",
+          "#4b0502",
+          "#732219",
+          "#9e3e32",
+          "#ca5b4d",
+          "#eb8474",
+          "#ffac9d",
+          "#ffd6c8"
+        ]
+      },
+      "steam-blue": {
+        "role": "tertiary",
+        "displayName": "Steam Blue (cutaway only)",
+        "canonical": "#4f84b5",
+        "tonalRamp": [
+          "#000b21",
+          "#042743",
+          "#1d4568",
+          "#36658f",
+          "#5287b8",
+          "#7aaad8",
+          "#a3cef8",
+          "#cdf3ff"
+        ]
+      },
+      "boil-orange": {
+        "role": "tertiary",
+        "displayName": "Boil Orange (cutaway only)",
+        "canonical": "#c95f2a",
+        "tonalRamp": [
+          "#250000",
+          "#4a0800",
+          "#732500",
+          "#9d410d",
+          "#c95f2b",
+          "#e9885b",
+          "#ffb088",
+          "#ffd9b6"
+        ]
+      },
+      "sky-top": {
+        "role": "neutral",
+        "displayName": "Sky Top",
+        "canonical": "#8fbbe0",
+        "tonalRamp": [
+          "#000c1b",
+          "#0d273b",
+          "#26455e",
+          "#416583",
+          "#5d87aa",
+          "#84aaca",
+          "#abceec",
+          "#d4f3ff"
+        ]
+      },
+      "sky-bottom": {
+        "role": "neutral",
+        "displayName": "Sky Bottom",
+        "canonical": "#e9f1f3",
+        "tonalRamp": [
+          "#090c0d",
+          "#222627",
+          "#3e4344",
+          "#5c6264",
+          "#7d8486",
+          "#a0a6a8",
+          "#c4cacc",
+          "#eaf0f1"
+        ]
+      },
+      "night-navy": {
+        "role": "neutral",
+        "displayName": "Night Navy",
+        "canonical": "#0a1422",
+        "tonalRamp": [
+          "#060b13",
+          "#1e2630",
+          "#394350",
+          "#576272",
+          "#768396",
+          "#9aa6b7",
+          "#bfcada",
+          "#e5effe"
+        ]
+      },
+      "night-surface": {
+        "role": "neutral",
+        "displayName": "Night Surface",
+        "canonical": "#101e32",
+        "tonalRamp": [
+          "#050b16",
+          "#1c2634",
+          "#364355",
+          "#536278",
+          "#72849d",
+          "#96a6be",
+          "#bbcae0",
+          "#e2f0ff"
+        ]
+      },
+      "night-surface-2": {
+        "role": "neutral",
+        "displayName": "Night Surface 2",
+        "canonical": "#16263d",
+        "tonalRamp": [
+          "#040b17",
+          "#1b2635",
+          "#354357",
+          "#52627a",
+          "#7084a0",
+          "#94a6c1",
+          "#bacbe2",
+          "#e1f0ff"
+        ]
+      },
+      "night-ink": {
+        "role": "neutral",
+        "displayName": "Night Ink",
+        "canonical": "#eaf1f7",
+        "tonalRamp": [
+          "#090b0e",
+          "#222629",
+          "#3e4346",
+          "#5d6267",
+          "#7d8389",
+          "#a0a6ab",
+          "#c5cace",
+          "#eaeff3"
+        ]
+      },
+      "night-muted": {
+        "role": "neutral",
+        "displayName": "Night Muted",
+        "canonical": "#a3b3c5",
+        "tonalRamp": [
+          "#060c13",
+          "#1d2630",
+          "#38434f",
+          "#566371",
+          "#758495",
+          "#99a7b7",
+          "#becbd9",
+          "#e4f0fd"
+        ]
+      },
+      "night-hairline": {
+        "role": "neutral",
+        "displayName": "Night Hairline",
+        "canonical": "#22344f",
+        "tonalRamp": [
+          "#040b18",
+          "#1a2537",
+          "#344359",
+          "#50627d",
+          "#6f84a3",
+          "#93a6c4",
+          "#b9cbe5",
+          "#e0f0ff"
+        ]
+      },
+      "night-hairline-strong": {
+        "role": "neutral",
+        "displayName": "Night Hairline Strong",
+        "canonical": "#33496b",
+        "tonalRamp": [
+          "#030b1b",
+          "#17253b",
+          "#31435d",
+          "#4d6282",
+          "#6b84a9",
+          "#90a6c9",
+          "#b6cbeb",
+          "#ddf0ff"
+        ]
+      },
+      "night-fuel": {
+        "role": "secondary",
+        "displayName": "Fuel Green (night)",
+        "canonical": "#7fd192",
+        "tonalRamp": [
+          "#001200",
+          "#00300c",
+          "#0b5025",
+          "#29723f",
+          "#45965b",
+          "#71b881",
+          "#9cdba9",
+          "#c7ffd2"
+        ]
+      },
+      "night-gold": {
+        "role": "secondary",
+        "displayName": "Power Gold (night)",
+        "canonical": "#ffc94d",
+        "tonalRamp": [
+          "#1b0400",
+          "#3c1d00",
+          "#5f3900",
+          "#845800",
+          "#ab7800",
+          "#cb9d2e",
+          "#edc36a",
+          "#ffea9e"
+        ]
+      },
+      "night-danger": {
+        "role": "neutral",
+        "displayName": "Danger (night)",
+        "canonical": "#ff8d7d",
+        "tonalRamp": [
+          "#250000",
+          "#4a0704",
+          "#72231b",
+          "#9d3f34",
+          "#c85d4f",
+          "#e98577",
+          "#ffad9f",
+          "#ffd7c9"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "One h1 per page; the journey hero steps down to clamp(2.75rem, 5.3vw, 5.4rem) with its second line in power gold."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Section h2."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "h3, job titles, plot captions."
+      },
+      "lede": {
+        "displayName": "Lede",
+        "purpose": "Muted sentence under a heading, 58ch max."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Running copy; prose at 68ch and 1.7 line height."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Small sentence-case section headings in footer and contact."
+      },
+      "figure": {
+        "displayName": "Figure",
+        "purpose": "Measured output and pay in power gold, tabular numerals."
+      }
+    },
+    "shadows": [
+      {
+        "name": "shadow-1",
+        "value": "0 1px 2px rgba(19, 36, 28, .06), 0 8px 24px -12px rgba(19, 36, 28, .18)",
+        "purpose": "Rest float: cutaway card, canvases, part labels, doc-row hover. Night: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px -12px rgba(0,0,0,.6)."
+      },
+      {
+        "name": "shadow-2",
+        "value": "0 2px 4px rgba(19, 36, 28, .06), 0 22px 48px -20px rgba(19, 36, 28, .28)",
+        "purpose": "Lifted float: story panel, map inset, mobile menu. Night: 0 2px 4px rgba(0,0,0,.3), 0 22px 48px -20px rgba(0,0,0,.7)."
+      },
+      {
+        "name": "amber-glow",
+        "value": "0 1px 0 rgba(0,0,0,.08), 0 10px 24px -12px rgba(201, 143, 29, .8)",
+        "purpose": "Primary button only; hover deepens to 0 2px 0 rgba(0,0,0,.08), 0 16px 34px -12px rgba(201, 143, 29, .95)."
+      },
+      {
+        "name": "frosted-glass",
+        "value": "background: color-mix(in srgb, var(--surface) 86%, transparent); backdrop-filter: blur(14px) saturate(1.2)",
+        "purpose": "Only where text sits over the moving model (panel 14px blur; legend, segments, inset 10-12px)."
+      },
+      {
+        "name": "focus-ring",
+        "value": "outline: 3px solid var(--gold-glow); outline-offset: 3px; border-radius: 4px",
+        "purpose": "Global :focus-visible."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-out",
+        "value": "cubic-bezier(.16, 1, .3, 1)",
+        "purpose": "Default easing for all state and entrance motion."
+      },
+      {
+        "name": "ease-draw",
+        "value": "cubic-bezier(.6, .1, .2, 1)",
+        "purpose": "Stroke line-draw of fine-line illustrations, 1.6-1.8s."
+      },
+      {
+        "name": "theme-crossfade",
+        "value": ".8s",
+        "purpose": "Background and text color when the light changes."
+      },
+      {
+        "name": "button-lift",
+        "value": "transform .25s, box-shadow .3s",
+        "purpose": "translateY(-1px) on hover, back to 0 on press."
+      },
+      {
+        "name": "panel-fade",
+        "value": "opacity .5s",
+        "purpose": "Story panel in/out; step copy enters over .5s."
+      },
+      {
+        "name": "header-hide",
+        "value": "transform .45s",
+        "purpose": "Header slides away on downward scroll past 160px."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "prefers-reduced-motion: reduce",
+        "purpose": "Transitions and animations collapse to .01ms; engines still and snap; homes field fully lit; fire demo resolves instantly; cutaway drawn with particles hidden."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "phone-narrow",
+        "value": "420px"
+      },
+      {
+        "name": "phone",
+        "value": "520px"
+      },
+      {
+        "name": "rows",
+        "value": "760px"
+      },
+      {
+        "name": "stack",
+        "value": "860px"
+      },
+      {
+        "name": "nav",
+        "value": "900px"
+      },
+      {
+        "name": "header-max",
+        "value": "1440px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The one amber action in a view.",
+      "html": "<a class=\"ds-btn ds-btn-primary\" href=\"#\">Join the crew</a>",
+      "css": ".ds-btn{display:inline-flex;align-items:center;gap:10px;min-height:48px;font:700 1rem/1 \"Schibsted Grotesk Variable\",system-ui,sans-serif;padding:14px 22px;border-radius:999px;text-decoration:none;cursor:pointer;transition:transform .25s cubic-bezier(.16,1,.3,1),box-shadow .3s cubic-bezier(.16,1,.3,1),border-color .2s}.ds-btn-primary{background:#f0b93f;color:#1b1a10;border:1.5px solid #f0b93f;box-shadow:0 1px 0 rgba(0,0,0,.08),0 10px 24px -12px rgba(201,143,29,.8)}.ds-btn-primary:hover{transform:translateY(-1px);box-shadow:0 2px 0 rgba(0,0,0,.08),0 16px 34px -12px rgba(201,143,29,.95)}.ds-btn-primary:active{transform:translateY(0)}.ds-btn-primary:focus-visible{outline:3px solid #f0b93f;outline-offset:3px}"
+    },
+    {
+      "name": "Ghost Button",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "Secondary path beside a primary.",
+      "html": "<a class=\"ds-btn-ghost\" href=\"#\">Follow the journey <svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.75\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M12 5v14M6 13l6 6 6-6\"/></svg></a>",
+      "css": ".ds-btn-ghost{display:inline-flex;align-items:center;gap:10px;min-height:48px;font:700 1rem/1 \"Schibsted Grotesk Variable\",system-ui,sans-serif;padding:14px 22px;border-radius:999px;text-decoration:none;background:transparent;color:#13241c;border:1.5px solid color-mix(in srgb,#13241c 55%,transparent);transition:transform .25s cubic-bezier(.16,1,.3,1),border-color .2s}.ds-btn-ghost:hover{border-color:#13241c;transform:translateY(-1px)}.ds-btn-ghost:focus-visible{outline:3px solid #f0b93f;outline-offset:3px}"
+    },
+    {
+      "name": "Segmented Control",
+      "kind": "chip",
+      "refersTo": "segment-pressed",
+      "description": "Journey legend view and light switches; frosted, over the model only.",
+      "html": "<span class=\"ds-seg\" role=\"group\" aria-label=\"Preview the light\"><button aria-pressed=\"true\">Live</button><button aria-pressed=\"false\">Day</button><button aria-pressed=\"false\">Golden hour</button><button aria-pressed=\"false\">Night</button></span>",
+      "css": ".ds-seg{display:inline-flex;gap:2px;padding:4px;border-radius:999px;background:color-mix(in srgb,#f8faf8 86%,transparent);border:1px solid #d3ddd8;backdrop-filter:blur(10px)}.ds-seg button{font:600 .8rem/1 \"Schibsted Grotesk Variable\",system-ui,sans-serif;color:#4a5b53;background:none;border:0;border-radius:999px;padding:8px 11px;cursor:pointer;transition:background-color .2s,color .2s}.ds-seg button:hover{color:#13241c}.ds-seg button[aria-pressed=\"true\"]{background:#13241c;color:#eef1ec}.ds-seg button:focus-visible{outline:3px solid #f0b93f;outline-offset:3px}"
+    },
+    {
+      "name": "Status Line",
+      "kind": "custom",
+      "description": "Live open/closed status in Anderson time.",
+      "html": "<span class=\"ds-status\" data-open=\"true\"><span class=\"ds-dot\"></span><span>Drop-off: <b>Open now</b> · until 4 p.m.</span></span>",
+      "css": ".ds-status{display:inline-flex;align-items:center;gap:9px;font:600 .95rem \"Schibsted Grotesk Variable\",system-ui,sans-serif;color:#4a5b53}.ds-dot{width:9px;height:9px;border-radius:50%;background:#b7c5be}.ds-status[data-open=\"true\"] .ds-dot{background:#2f7a45;box-shadow:0 0 0 4px color-mix(in srgb,#2f7a45 22%,transparent)}.ds-status[data-open=\"false\"] .ds-dot{background:#a3372b}.ds-status b{color:#13241c;font-weight:700}"
+    },
+    {
+      "name": "Document Row",
+      "kind": "card",
+      "refersTo": "doc-row",
+      "description": "Downloadable PDF as a paper tile.",
+      "html": "<a class=\"ds-doc\" href=\"#\"><svg width=\"26\" height=\"26\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.75\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M14 3H7.5A1.5 1.5 0 0 0 6 4.5v15A1.5 1.5 0 0 0 7.5 21h9a1.5 1.5 0 0 0 1.5-1.5V7Z\"/><path d=\"M14 3v4h4M9 13h6M9 16.5h4\"/></svg><span class=\"ds-doc-t\"><b>Driver safety orientation</b><span>Rules for the scale and yard</span></span><span class=\"ds-doc-m\">PDF · 240 KB</span></a>",
+      "css": ".ds-doc{display:grid;grid-template-columns:auto 1fr auto;gap:16px;align-items:center;padding:18px 20px;border-radius:16px;background:#f8faf8;border:1px solid #d3ddd8;text-decoration:none;color:#13241c;font-family:\"Schibsted Grotesk Variable\",system-ui,sans-serif;transition:border-color .2s,transform .3s cubic-bezier(.16,1,.3,1),box-shadow .3s cubic-bezier(.16,1,.3,1)}.ds-doc>svg{color:#2f7a45}.ds-doc:hover{border-color:#b7c5be;transform:translateY(-2px);box-shadow:0 1px 2px rgba(19,36,28,.06),0 8px 24px -12px rgba(19,36,28,.18)}.ds-doc:focus-visible{outline:3px solid #f0b93f;outline-offset:3px}.ds-doc-t{display:grid;gap:2px}.ds-doc-t span{color:#4a5b53;font-size:.92rem}.ds-doc-m{color:#4a5b53;font-size:.85rem;font-weight:600;white-space:nowrap}"
+    },
+    {
+      "name": "Job Row",
+      "kind": "custom",
+      "description": "Ruled row with title, summary, gold pay, and arrow.",
+      "html": "<a class=\"ds-job\" href=\"#\"><span class=\"ds-job-t\">Boiler operator</span><span class=\"ds-job-s\">Run the boiler and keep steam steady.</span><span class=\"ds-job-p\">$32-$41/hr</span></a>",
+      "css": ".ds-job{display:grid;grid-template-columns:minmax(180px,1.1fr) 2fr 10.5rem;gap:8px 28px;align-items:center;padding:22px 12px;border-radius:12px;border-bottom:1px solid #d3ddd8;text-decoration:none;color:#13241c;font-family:\"Schibsted Grotesk Variable\",system-ui,sans-serif;transition:background-color .2s}.ds-job:hover{background:#eef1ec}.ds-job:focus-visible{outline:3px solid #f0b93f;outline-offset:3px}.ds-job-t{font:800 1.3rem/1.15 \"Bricolage Grotesque Variable\",system-ui,sans-serif;letter-spacing:-.02em}.ds-job-s{color:#4a5b53}.ds-job-p{font-weight:700;color:#9a6a06;text-align:right;white-space:nowrap}"
+    },
+    {
+      "name": "Story Panel",
+      "kind": "custom",
+      "refersTo": "story-panel",
+      "description": "Frosted caption card over the moving model with a flow-tinted rail.",
+      "html": "<div class=\"ds-panel\"><h2>Fuel yard</h2><p>Chips are stockpiled and blended so the boiler gets a steady diet.</p><p class=\"ds-fig\">1,250 tons<small>of wood a day</small></p><div class=\"ds-rail\"><i class=\"d\"></i><i class=\"d\"></i><i class=\"d\"></i><i class=\"n\"></i><i></i><i></i><i></i><i></i><span>4/8</span></div></div>",
+      "css": ".ds-panel{width:410px;max-width:100%;background:color-mix(in srgb,#f8faf8 86%,transparent);backdrop-filter:blur(14px) saturate(1.2);border:1px solid #d3ddd8;border-radius:22px;padding:28px 28px 20px;display:grid;gap:12px;box-shadow:0 2px 4px rgba(19,36,28,.06),0 22px 48px -20px rgba(19,36,28,.28);color:#13241c;font-family:\"Schibsted Grotesk Variable\",system-ui,sans-serif}.ds-panel h2{margin:0;font:800 clamp(1.9rem,3vw,2.75rem)/1.02 \"Bricolage Grotesque Variable\",system-ui,sans-serif;letter-spacing:-.03em}.ds-panel p{margin:0;color:#4a5b53}.ds-panel .ds-fig{font:800 2.6rem/1 \"Bricolage Grotesque Variable\",system-ui,sans-serif;letter-spacing:-.03em;color:#9a6a06}.ds-fig small{display:block;font:600 .9rem/1.3 \"Schibsted Grotesk Variable\",system-ui,sans-serif;letter-spacing:0;color:#4a5b53;margin-top:6px}.ds-rail{display:flex;gap:5px;align-items:center}.ds-rail i{flex:1;height:4px;border-radius:4px;background:#d3ddd8}.ds-rail i.d{background:#2f7a45}.ds-rail i.n{background:#2f7a45;height:8px}.ds-rail span{font-weight:700;font-size:.9rem;color:#4a5b53;margin-left:9px}"
+    },
+    {
+      "name": "Navigation",
+      "kind": "nav",
+      "description": "Fixed header links with scale-in underline and small amber Apply.",
+      "html": "<nav class=\"ds-nav\"><a href=\"#\" aria-current=\"page\">How it works</a><a href=\"#\">Forests &amp; wildfire</a><a href=\"#\">Careers</a><a href=\"#\">Drop-off</a><a class=\"ds-apply\" href=\"#\">Apply now</a></nav>",
+      "css": ".ds-nav{display:flex;align-items:center;gap:24px;font:600 .98rem \"Schibsted Grotesk Variable\",system-ui,sans-serif;color:#13241c}.ds-nav a{color:inherit;text-decoration:none;padding:8px 0;position:relative}.ds-nav a:not(.ds-apply)::after{content:\"\";position:absolute;left:0;right:0;bottom:2px;height:2px;border-radius:2px;background:currentColor;transform:scaleX(0);transform-origin:left;transition:transform .35s cubic-bezier(.16,1,.3,1)}.ds-nav a:hover::after,.ds-nav a[aria-current=\"page\"]::after{transform:scaleX(1)}.ds-nav a:focus-visible{outline:3px solid #f0b93f;outline-offset:3px}.ds-nav .ds-apply{margin-left:auto;min-height:40px;padding:10px 16px;border-radius:999px;background:#f0b93f;color:#1b1a10;font-weight:700;font-size:.95rem;display:inline-flex;align-items:center}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Museum Diorama",
+    "overview": "The site is a working tabletop model of the North State: real USGS terrain on a dark plinth with soil-strata cut edges, a miniature conifer forest, and a matte clay plant, lit by the real sun over Anderson. The visitor follows a load of wood from the forest to their light switch. Everything else (inner pages, job rows, hours, documents) is the quiet placard beside the model: flat paper surfaces, hairline rules, heavy grotesque headlines, and one amber action.\n\nOne world, two lights. Day is valley mist and conifer ink; night is navy with window and power gold glowing. The page does not choose a theme; the sun does. Density is low on Persuade and Read pages and tighter on Operate pages (careers, drop-off, safety, contact), where rows and tables replace prose.\n\nThe build refuses the category's photo hero, stat band, and three-card grid. No stock photography, no testimonials, and no figure the plant has not stated.",
+    "keyCharacteristics": [
+      "Real terrain and real sun position carry the imagery; no photos.",
+      "Two palettes, swapped wholesale by one class on the root element.",
+      "Fuel green and power gold are the only interface flow colors; amber means \"act\".",
+      "Heavy Bricolage display over a plain Schibsted body.",
+      "Flat paper surfaces with hairlines; frosted glass only over the moving model.",
+      "One authored motion moment per section, and all of it yields to reduced motion."
+    ],
+    "rules": [
+      {
+        "name": "The Amber Means Act Rule",
+        "body": "Action Amber marks the one primary action in a view and the interaction states listed above. It is never decoration, never a bullet, never a text color.",
+        "section": "colors"
+      },
+      {
+        "name": "The Two Flows Rule",
+        "body": "Interface flow color is fuel green (wood) or power gold (electricity). Boiler steps are drawn in green and turbine steps in gold; steam and boil hues stay inside the cutaway.",
+        "section": "colors"
+      },
+      {
+        "name": "The Sun Decides Rule",
+        "body": "Theme is set before first paint from the solar altitude at Anderson (40.448 N, 122.297 W; night below -0.833 degrees), rechecked every minute. `?light=day|golden|night|live` previews and persists for the session. There is no manual theme toggle outside the journey's light preview.",
+        "section": "colors"
+      },
+      {
+        "name": "The Heading Stands Alone Rule",
+        "body": "Nothing sits above a heading: no eyebrow, kicker, or uppercase tag. Section identity comes from the heading itself and the surface change.",
+        "section": "typography"
+      },
+      {
+        "name": "The Solid Ink Rule",
+        "body": "Headline color is ink or power gold, as a solid fill. No gradient or clipped-background text.",
+        "section": "typography"
+      },
+      {
+        "name": "The Glass Over Motion Rule",
+        "body": "Frosted glass (surface mixed at 86-90% with 10-14px backdrop blur) is allowed only where text sits over the moving model: the story panel, legend keys, segmented controls, part labels, and the map inset. Nowhere else.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do bind every color to a token and let `html.night` swap it; canvas code must read the night class and redraw on change.",
+      "Do keep one amber primary per view, with a ghost button for the secondary path.",
+      "Do color interface flow as fuel green (wood) or power gold (electricity), and measured output as a power-gold figure.",
+      "Do separate sections by paper bands and hairlines, and list things as ruled rows.",
+      "Do draw icons from the authored 24px, 1.75-stroke set and set them inline with text.",
+      "Do give every model, canvas, and demo a text equivalent and a reduced-motion state.",
+      "Do flag every stated figure as SRM-confirmed source data before it ships, and label illustrations as illustrations."
+    ],
+    "donts": [
+      "Don't put an eyebrow, kicker, or uppercase tag above a heading.",
+      "Don't use gradient or background-clipped text.",
+      "Don't build icon-card grids or three-up feature cards.",
+      "Don't use frosted glass anywhere except text over the moving model.",
+      "Don't use Action Amber for bullets, dots, rules, or other decoration.",
+      "Don't introduce steam blue or boil orange into interface chrome.",
+      "Don't use stock photos, testimonials, or invented numbers, emissions data, or claims.",
+      "Don't add a manual theme switch; the sun sets the light."
+    ]
+  }
+}

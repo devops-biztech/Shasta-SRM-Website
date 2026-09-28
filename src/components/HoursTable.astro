@@ -1,0 +1,29 @@
+---
+import OpenStatus from './OpenStatus.astro';
+import { schedules } from '../data/site';
+import { summarize } from '../lib/hours';
+interface Props { schedule: 'dropoff' | 'delivery'; heading?: string }
+const { schedule, heading } = Astro.props;
+const s = schedules[schedule];
+const rows = summarize(s);
+---
+<div class="hours">
+  {heading && <h3>{heading}</h3>}
+  <OpenStatus schedule={schedule} />
+  <table>
+    <caption class="visually-hidden">{s.label} hours</caption>
+    <tbody>
+      {rows.map((r) => <tr><th scope="row">{r.days}</th><td>{r.hours}</td></tr>)}
+    </tbody>
+  </table>
+  <p class="note">{s.note}</p>
+</div>
+
+<style>
+  .hours { display: grid; gap: 14px; }
+  table { border-collapse: collapse; width: 100%; max-width: 420px; }
+  th, td { text-align: left; padding: 10px 0; border-bottom: 1px solid var(--line); }
+  th { font-weight: 700; width: 40%; }
+  td { color: var(--muted); }
+  .note { color: var(--muted); font-size: .92rem; max-width: 48ch; }
+</style>

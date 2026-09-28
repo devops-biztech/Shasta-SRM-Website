@@ -1,0 +1,57 @@
+---
+import Icon from './Icon.astro';
+import OpenStatus from './OpenStatus.astro';
+import { nav, org } from '../data/site';
+const year = new Date().getFullYear();
+---
+<footer class="site-footer">
+  <div class="wrap grid">
+    <div class="about stack">
+      <img src="/brand/logo-250x140.png" width="107" height="60" alt="Sustainable Resource Management" />
+      <p class="muted">Turning forest thinnings and wood waste into renewable power in Anderson, California, since {org.founded}.</p>
+      <div class="cluster social">
+        <a href={org.social.facebook} rel="noopener" target="_blank"><Icon name="facebook" label="Shasta SRM on Facebook" /></a>
+        <a href={org.social.linkedin} rel="noopener" target="_blank"><Icon name="linkedin" label="Shasta SRM on LinkedIn" /></a>
+      </div>
+    </div>
+    <div class="stack">
+      <h2 class="h">Visit</h2>
+      <a class="row" href={org.mapsUrl} rel="noopener" target="_blank"><Icon name="pin" /><span>{org.address.street}<br />{org.address.city}, {org.address.state} {org.address.zip}</span></a>
+      <a class="row" href={`tel:${org.phone.main}`}><Icon name="phone" /><span>{org.phone.main}</span></a>
+      <OpenStatus schedule="dropoff" prefix="Drop-off: " />
+    </div>
+    <nav class="stack" aria-label="Footer">
+      <h2 class="h">Explore</h2>
+      {nav.map((n) => <a href={n.href}>{n.label}</a>)}
+      <a href="/safety/">Safety</a>
+      <a href="/contact/">Contact</a>
+    </nav>
+    <div class="stack">
+      <h2 class="h">Work here</h2>
+      <p class="muted">We’re hiring operators, mechanics, and yard crew.</p>
+      <a class="link-arrow" href="/careers/">See open positions <Icon name="arrow-right" /></a>
+    </div>
+  </div>
+  <div class="wrap legal">
+    <span>© {year} {org.name}</span>
+    <span>Terrain: USGS elevation data via AWS Terrain Tiles</span>
+  </div>
+</footer>
+
+<style>
+  .site-footer { border-top: 1px solid var(--line); background: var(--surface); padding-block: 64px 28px; position: relative; z-index: 2; }
+  .grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 40px; }
+  .about img { background: #fff; border-radius: 999px; padding: 4px 12px; width: auto; height: 60px; }
+  .about p { max-width: 34ch; }
+  .h { font: 700 .95rem/1 var(--body); letter-spacing: .01em; color: var(--muted); }
+  .stack { --gap: 12px; }
+  .stack > a { text-decoration: none; font-weight: 600; }
+  .stack > a:hover { text-decoration: underline; }
+  .row { display: flex; gap: 10px; align-items: flex-start; }
+  .row :global(svg) { margin-top: 3px; flex: none; color: var(--muted); }
+  .social a { width: 42px; height: 42px; border-radius: 50%; border: 1px solid var(--line-strong); display: grid; place-items: center; transition: background-color .2s; }
+  .social a:hover { background: var(--surface-2); }
+  .legal { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; margin-top: 56px; padding-top: 22px; border-top: 1px solid var(--line); color: var(--muted); font-size: .9rem; }
+  @media (max-width: 900px) { .grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 560px) { .grid { grid-template-columns: 1fr; } }
+</style>

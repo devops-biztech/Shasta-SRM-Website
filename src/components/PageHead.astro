@@ -1,0 +1,53 @@
+---
+// Inner-page intro. Behind it, real contour lines from the part of the region this page is about.
+interface Props { title: string; lede?: string; place?: 'shasta' | 'trinity' | 'anderson' | 'lassen' }
+const { title, lede, place = 'anderson' } = Astro.props;
+const views = { shasta: [490, 150, 3.2], trinity: [260, 470, 2.6], anderson: [430, 880, 2.6], lassen: [880, 860, 2.6] } as const;
+const [x, y, z] = views[place];
+---
+<header class="page-head" data-topo={`${x},${y},${z}`}>
+  <canvas aria-hidden="true"></canvas>
+  <div class="wrap">
+    <h1>{title}</h1>
+    {lede && <p class="lede">{lede}</p>}
+    <slot />
+  </div>
+</header>
+
+<style>
+  .page-head h1 { max-width: 16ch; }
+  .page-head canvas { -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 45%); mask-image: linear-gradient(90deg, transparent 0%, #000 45%); }
+  @media (max-width: 700px) { .page-head canvas { opacity: .45; } }
+</style>
+
+<script>
+  // Draw once (and again when the light changes). Lines only, no fills: quiet texture, real place.
+  let data: Promise<{ h: number; levels: { e: number; l: number[][] }[] }> | null = null;
+  const load = () => (data ??= fetch('/data/contours.json').then((r) => r.json()));
+  document.querySelectorAll<HTMLElement>('[data-topo]').forEach((head) => {
+    const canvas = head.querySelector('canvas')!;
+    const [cx, cy, zoom] = head.dataset.topo!.split(',').map(Number);
+    const draw = async () => {
+      const C = await load();
+      const r = head.getBoundingClientRect(), dpr = Math.min(2, devicePixelRatio || 1);
+      canvas.width = Math.round(r.width * dpr); canvas.height = Math.round(r.height * dpr);
+      const ctx = canvas.getContext('2d')!;
+      const night = document.documentElement.classList.contains('night');
+      const z = (Math.max(r.width, r.height) / 1000) * zoom, tilt = 0.55, ex = 3.6 / 139;
+      const ox = r.width * 0.68 - cx * z;
+      for (const L of C.levels) {
+        const major = L.e % 500 === 0;
+        ctx.setTransform(z * dpr, 0, 0, z * tilt * dpr, ox * dpr, (r.height * 0.62 - cy * z * tilt - L.e * ex * z) * dpr);
+        ctx.lineWidth = (major ? 1.2 : 0.7) / z;
+        ctx.strokeStyle = night ? `rgba(160,195,230,${major ? 0.32 : 0.14})` : `rgba(18,48,32,${major ? 0.3 : 0.13})`;
+        ctx.beginPath();
+        for (const f of L.l) { ctx.moveTo(f[0], f[1]); for (let i = 2; i < f.length; i += 2) ctx.lineTo(f[i], f[i + 1]); }
+        ctx.stroke();
+      }
+    };
+    draw();
+    let t: number | undefined;
+    addEventListener('resize', () => { clearTimeout(t); t = window.setTimeout(draw, 150); });
+    new MutationObserver(draw).observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+  });
+</script>

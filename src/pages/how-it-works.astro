@@ -1,0 +1,72 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import PlantCutaway from '../components/PlantCutaway.astro';
+import Icon from '../components/Icon.astro';
+import { steps, flowColor } from '../data/story';
+import { facts, fmt, org } from '../data/site';
+---
+<Base title="How it works" description="How Shasta SRM turns forest thinnings and wood waste into renewable electricity, step by step, from the forest floor to your home.">
+  <PageHead title="How wood becomes electricity." lede="Eight steps, from a crowded stand of forest to the outlet in your wall. Nothing in the middle is exotic: fuel, fire, steam, and a spinning generator. What matters is where the fuel comes from." place="shasta">
+    <a class="link-arrow" href="/#step-1">Follow it on the 3D model <Icon name="arrow-right" /></a>
+  </PageHead>
+
+  <section class="section-tight" aria-label="The eight steps">
+    <div class="wrap">
+      <ol class="steps">
+        {steps.map((s, i) => (
+          <li style={`--c:${flowColor[s.flow]}`} id={s.id}>
+            <span class="n" aria-hidden="true">{i + 1}</span>
+            <div class="body">
+              <h2>{s.title}</h2>
+              <p class="lead">{s.text}</p>
+              <p class="more">{s.more}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="section-tight inside" aria-labelledby="inside-title">
+    <div class="wrap split">
+      <div class="stack">
+        <h2 id="inside-title">Inside the plant</h2>
+        <p class="lede">A steam plant is a simple machine at heart. Wood is the fuel, water is the working fluid, and the generator turns motion into electricity.</p>
+      </div>
+      <PlantCutaway />
+    </div>
+  </section>
+
+  <section class="section-tight" aria-labelledby="numbers-title">
+    <div class="wrap split">
+      <h2 id="numbers-title">By the numbers</h2>
+      <dl class="numbers">
+        <div><dt>Generating capacity</dt><dd>{facts.capacityMW.value} MW</dd></div>
+        <div><dt>Wood taken in</dt><dd>up to {fmt(facts.tonsPerDay.value)} tons a day</dd></div>
+        <div><dt>Homes’ worth of electricity</dt><dd>about {fmt(facts.homesPowered.value)}</dd></div>
+        <div><dt>Oil it would take instead</dt><dd>{fmt(facts.oilBarrelsOffset.value)} barrels a year</dd></div>
+        <div><dt>Or coal</dt><dd>{fmt(facts.coalTonsOffset.value)} tons a year</dd></div>
+        <div><dt>Making power in Anderson since</dt><dd>{org.founded}</dd></div>
+      </dl>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .steps { list-style: none; margin: 0; padding: 0; display: grid; }
+  .steps li { display: grid; grid-template-columns: clamp(56px, 8vw, 110px) 1fr; gap: 16px; padding-block: clamp(28px, 4vw, 44px); border-top: 1px solid var(--line); scroll-margin-top: 96px; }
+  .n { font: 800 clamp(2.4rem, 5vw, 4rem)/.9 var(--display); letter-spacing: -.04em; color: var(--c); }
+  .body { display: grid; grid-template-columns: minmax(200px, 1fr) 1.4fr; gap: 12px clamp(24px, 5vw, 64px); align-items: start; }
+  .body h2 { font-size: clamp(1.6rem, 2.6vw, 2.2rem); grid-row: span 2; }
+  .lead { font-size: 1.15rem; line-height: 1.55; }
+  .more { color: var(--muted); max-width: 60ch; }
+  .inside { background: var(--surface); border-block: 1px solid var(--line); }
+  .split { display: grid; grid-template-columns: minmax(260px, 4fr) 7fr; gap: 32px clamp(32px, 6vw, 88px); align-items: start; }
+  .numbers { margin: 0; display: grid; }
+  .numbers div { display: grid; grid-template-columns: 1fr auto; gap: 16px; padding-block: 18px; border-bottom: 1px solid var(--line); align-items: baseline; }
+  .numbers div:first-child { border-top: 1px solid var(--line); }
+  .numbers dt { color: var(--muted); }
+  .numbers dd { margin: 0; font: 800 1.5rem/1.1 var(--display); letter-spacing: -.02em; text-align: right; }
+  @media (max-width: 860px) { .body, .split { grid-template-columns: 1fr; } .body h2 { grid-row: auto; } }
+</style>

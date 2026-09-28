@@ -1,0 +1,61 @@
+---
+import '@fontsource-variable/bricolage-grotesque';
+import '@fontsource-variable/schibsted-grotesk';
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { org } from '../data/site';
+
+interface Props { title: string; description: string; bare?: boolean }
+const { title, description } = Astro.props;
+const fullTitle = title === 'Home' ? `${org.name} · Renewable power from forest waste` : `${title} · ${org.short}`;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/png" href="/brand/logo-250x140.png" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content={new URL('/brand/logo-700x375.png', Astro.site)} />
+    <meta name="theme-color" content="#eef1ec" />
+    <!-- Light follows the real sun over Anderson; set before first paint so there is no flash. -->
+    <script is:inline>
+      (function () {
+        var mode = 'live';
+        try { var q = new URLSearchParams(location.search).get('light'); if (q) sessionStorage.setItem('srm-light', q); mode = sessionStorage.getItem('srm-light') || 'live'; } catch (e) {}
+        var night;
+        if (mode === 'night') night = true; else if (mode === 'day' || mode === 'golden') night = false;
+        else {
+          var R = Math.PI / 180, d = Date.now() / 864e5 + 2440587.5 - 2451545;
+          var g = (357.529 + .98560028 * d) * R, L = (280.459 + .98564736 * d + 1.915 * Math.sin(g) + .02 * Math.sin(2 * g)) * R, e = (23.439 - 3.6e-7 * d) * R;
+          var ra = Math.atan2(Math.cos(e) * Math.sin(L), Math.cos(L)), dec = Math.asin(Math.sin(e) * Math.sin(L));
+          var H = (((18.697374558 + 24.06570982441908 * d) % 24) * 15 - 122.297) * R - ra, la = 40.448 * R;
+          night = Math.asin(Math.sin(la) * Math.sin(dec) + Math.cos(la) * Math.cos(dec) * Math.cos(H)) / R < -.833;
+        }
+        if (night) { document.documentElement.classList.add('night'); var m = document.querySelector('meta[name=theme-color]'); if (m) m.setAttribute('content', '#0a1422'); }
+      })();
+    </script>
+    <script type="application/ld+json" set:html={JSON.stringify({
+      '@context': 'https://schema.org', '@type': 'Organization', name: org.name, url: Astro.site?.toString(),
+      telephone: org.phone.main, foundingDate: String(org.founded),
+      address: { '@type': 'PostalAddress', streetAddress: org.address.street, addressLocality: org.address.city, addressRegion: org.address.state, postalCode: org.address.zip },
+      sameAs: [org.social.facebook, org.social.linkedin],
+    })} />
+    <slot name="head" />
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <Header />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>
