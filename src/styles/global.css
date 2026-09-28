@@ -112,6 +112,13 @@ p { margin: 0; text-wrap: pretty; }
 .link-arrow { display: inline-flex; align-items: center; gap: 8px; font-weight: 700; text-decoration: none; }
 .link-arrow svg { width: 18px; height: 18px; transition: transform .3s var(--ease-out); }
 .link-arrow:hover svg { transform: translateX(4px); }
+/* Grid parents would stretch the link across the row, making blank space tappable */
+.link-arrow { justify-self: start; }
+
+/* Touch screens: stand-alone links get a finger-sized (44px) target */
+@media (pointer: coarse) {
+  .link-arrow { min-height: 44px; }
+}
 
 /* Status pill (open / closed) */
 .status { display: inline-flex; align-items: center; gap: 9px; font-weight: 600; font-size: .95rem; color: var(--muted); }

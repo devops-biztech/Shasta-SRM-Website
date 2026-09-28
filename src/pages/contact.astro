@@ -55,5 +55,8 @@ import { org } from '../data/site';
   .big { display: inline-flex; gap: 12px; align-items: center; font: 800 clamp(1.6rem, 3vw, 2.2rem)/1.1 var(--display); letter-spacing: -.02em; text-decoration: none; }
   .big :global(svg) { color: var(--fuel); }
   .side { padding: 28px; border-radius: var(--radius); background: var(--surface); border: 1px solid var(--line); position: sticky; top: 100px; }
+  .line > a { justify-self: start; }
+  @media (pointer: coarse) { .line > a { display: inline-flex; align-items: center; min-height: 44px; } }
   @media (max-width: 860px) { .grid { grid-template-columns: 1fr; } .side { position: static; } }
+  @media (max-width: 560px) { .side { padding: 22px 20px; } }
 </style>

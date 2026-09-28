@@ -44,10 +44,12 @@ const here = (href: string) => path === href || path.startsWith(href);
   .menu-btn :global(.i-close) { display: none; }
   .menu-btn[aria-expanded="true"] :global(.i-open) { display: none; }
   .menu-btn[aria-expanded="true"] :global(.i-close) { display: block; }
-  .mobile { padding: 8px var(--gutter) 24px; display: grid; gap: 16px; background: var(--bg); border-bottom: 1px solid var(--line); box-shadow: var(--shadow-2); }
+  .mobile { padding: 8px var(--gutter) calc(24px + env(safe-area-inset-bottom, 0px)); display: grid; gap: 16px; background: var(--bg); border-bottom: 1px solid var(--line); box-shadow: var(--shadow-2); max-height: calc(100dvh - 70px - env(safe-area-inset-top, 0px)); overflow-y: auto; overscroll-behavior: contain; animation: menu-in .3s var(--ease-out); }
   .mobile[hidden] { display: none; }
+  @keyframes menu-in { from { opacity: 0; transform: translateY(-8px); } }
   .mobile nav { display: grid; }
   .mobile nav a { display: flex; justify-content: space-between; align-items: center; padding: 16px 0; border-bottom: 1px solid var(--line); font: 700 1.35rem/1.1 var(--display); letter-spacing: -.02em; text-decoration: none; }
+  .mobile nav a[aria-current="page"] { color: var(--fuel); }
   .mobile .btn { justify-content: center; }
   .call { display: inline-flex; gap: 10px; align-items: center; font-weight: 600; justify-self: center; }
   @media (max-width: 900px) {
@@ -69,10 +71,16 @@ const here = (href: string) => path === href || path.startsWith(href);
     lastY = y;
   };
   addEventListener('scroll', onScroll, { passive: true }); onScroll();
-  btn.addEventListener('click', () => {
-    const open = btn.getAttribute('aria-expanded') !== 'true';
+  const setOpen = (open: boolean) => {
     btn.setAttribute('aria-expanded', String(open)); menu.hidden = !open;
+    // Lock the page behind the menu so a swipe scrolls the menu, not the story.
+    document.documentElement.style.overflow = open ? 'hidden' : '';
     header.classList.toggle('solid', open || scrollY > 40);
-  });
-  addEventListener('keydown', (e) => { if (e.key === 'Escape' && !menu.hidden) { btn.click(); btn.focus(); } });
+  };
+  btn.addEventListener('click', () => setOpen(btn.getAttribute('aria-expanded') !== 'true'));
+  addEventListener('keydown', (e) => { if (e.key === 'Escape' && !menu.hidden) { setOpen(false); btn.focus(); } });
+  // Close on a tap outside the header, on any menu link (hash links don't navigate away), and when the desktop nav returns.
+  document.addEventListener('click', (e) => { if (!menu.hidden && !header.contains(e.target as Node)) setOpen(false); });
+  menu.addEventListener('click', (e) => { if ((e.target as Element).closest('a')) setOpen(false); });
+  matchMedia('(min-width: 901px)').addEventListener('change', (e) => { if (e.matches) setOpen(false); });
 </script>

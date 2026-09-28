@@ -35,6 +35,7 @@ const homes = facts.homesPowered.value;
   }
   @media (max-width: 640px) {
     .homes { height: 210vh; }
+    .sticky { padding-block: 72px 24px; }
     .copy { grid-template-columns: 1fr; }
     .count { text-align: left; }
   }
@@ -70,15 +71,23 @@ const homes = facts.homesPowered.value;
     rank = new Uint16Array(N); order.forEach((idx, r) => { rank[idx] = r; });
   }
 
+  const sticky = root.querySelector<HTMLElement>('.sticky')!;
   function size() {
     const w = canvas.clientWidth;
     if (!w) return;
     // column counts chosen so the grid is nearly full: only 20 / 10 / 12 dots short, tucked into the far top-right corner
-    const want = w >= 900 ? 157 : w >= 560 ? 110 : 98;
+    let want = w >= 900 ? 157 : w >= 560 ? 110 : 98;
+    // On short screens (phones on their side) widen the grid so the whole field fits on screen at once.
+    // Measured from the small viewport height, so the phone's URL bar sliding in and out doesn't reshuffle the dots.
+    const vh = parseFloat(getComputedStyle(sticky).minHeight) || innerHeight;
+    const maxH = vh * 0.62;
+    if ((w * Math.ceil(N / want)) / want > maxH) want = Math.min(N, Math.ceil(Math.sqrt((N * w) / maxH)));
     if (want !== cols) layout(want);
     const dpr = Math.min(3, devicePixelRatio || 1);
     pitch = Math.max(3, Math.floor((w * dpr) / cols));
     canvas.width = cols * pitch; canvas.height = rows * pitch;
+    // When the section is taller than the screen (phones), pin it by its bottom edge so the dot field, not the heading, stays in view
+    requestAnimationFrame(() => { sticky.style.top = `${Math.min(0, vh - sticky.offsetHeight)}px`; });
     lit = -1; update();
   }
 
