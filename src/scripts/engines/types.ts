@@ -34,7 +34,27 @@ export async function loadHeights() {
   return { hm: new Uint16Array(bytes.buffer), gw: j.gw as number, gh: j.gh as number };
 }
 
-export const hits = (rects: DOMRect[], x: number, y: number, w: number, h: number) =>
+/** Real city limits (Census TIGER), in the same grid space as PLACES. rings: flat [u,v,…] outer rings and holes. */
+export type Town = { name: string; kind: 'city' | 'cdp'; km2: number; center: [number, number]; rings: number[][] };
+
+export async function loadTowns(): Promise<Town[]> {
+  const j = await fetch('/data/towns.json').then((r) => { if (!r.ok) throw new Error(`town data ${r.status}`); return r.json(); });
+  return j.towns;
+}
+
+/** Even-odd point-in-polygon across every ring, so holes (county islands) stay outside. */
+export function inRings(rings: number[][], u: number, v: number) {
+  let inside = false;
+  for (const r of rings) {
+    for (let i = 0, n = r.length / 2, j = n - 1; i < n; j = i++) {
+      const xi = r[i * 2], yi = r[i * 2 + 1], xj = r[j * 2], yj = r[j * 2 + 1];
+      if (yi > v !== yj > v && u < ((xj - xi) * (v - yi)) / (yj - yi) + xi) inside = !inside;
+    }
+  }
+  return inside;
+}
+
+export const hits =(rects: DOMRect[], x: number, y: number, w: number, h: number) =>
   rects.some((r) => x < r.right && x + w > r.left && y < r.bottom && y + h > r.top);
 
 export const clamp = (v: number, a: number, b: number) => Math.max(a, Math.min(b, v));
