@@ -132,12 +132,15 @@ export function mountJourney(root: HTMLElement) {
   let visible = true;
   new IntersectionObserver((es) => { visible = es[0].isIntersecting; }).observe(root);
 
-  let last = performance.now();
+  let last = performance.now(), sfSmooth = NaN;
   function frame(t: number) {
     requestAnimationFrame(frame);
     const dt = Math.min(0.05, (t - last) / 1000); last = t;
     if (!visible || root.classList.contains('static')) return;
-    const sf = sfOf(progress());
+    // glide toward the scroll position so wheel notches read as motion, not jumps
+    const target = sfOf(progress());
+    sfSmooth = reduce || Number.isNaN(sfSmooth) ? target : sfSmooth + (target - sfSmooth) * (1 - Math.exp(-dt * 7));
+    const sf = sfSmooth;
     const step = sf < -0.25 ? -1 : clamp(Math.floor(sf + 0.25), 0, 7);
     setStep(step); setFigure(step, sf);
     const heroA = clamp(1 - (sf + 1) / 0.55, 0, 1);
